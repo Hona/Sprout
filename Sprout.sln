@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{28452A0D-3F6C-4694-B7B2-7FDD71E098C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sprout", "src\Sprout\Sprout.csproj", "{74DED756-08F0-40F2-822A-B901E5A6494A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{733BCE3A-5652-4512-A097-2FFC4D48F152}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{74DED756-08F0-40F2-822A-B901E5A6494A} = {28452A0D-3F6C-4694-B7B2-7FDD71E098C5}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74DED756-08F0-40F2-822A-B901E5A6494A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74DED756-08F0-40F2-822A-B901E5A6494A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74DED756-08F0-40F2-822A-B901E5A6494A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74DED756-08F0-40F2-822A-B901E5A6494A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
