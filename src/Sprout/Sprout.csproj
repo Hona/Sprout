@@ -4,6 +4,10 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>Sprout</PackageId>
+        <Authors>Hona</Authors>
+        <Company>Hona</Company>
+        <RepositoryUrl>https://github.com/Hona/Sprout</RepositoryUrl>
     </PropertyGroup>
 
 </Project>
