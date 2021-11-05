@@ -10,4 +10,35 @@
         <RepositoryUrl>https://github.com/Hona/Sprout</RepositoryUrl>
     </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Markdig" Version="0.26.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0-6.final" />
+        <PackageReference Include="YamlDotNet" Version="11.2.1" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+    </PropertyGroup>
+
+    <Target Name="GetDependencyTargetPaths" AfterTargets="ResolvePackageDependenciesForBuild">
+        <ItemGroup>
+            <TargetPathWithTargetPlatformMoniker Include="@(ResolvedCompileFileDefinitions)" IncludeRuntimeDependency="false" />
+        </ItemGroup>
+    </Target>
+
+    <ItemGroup>
+        <!-- Don't include the output from a previous source generator execution into future runs; the */** trick here ensures that there's
+        at least one subdirectory, which is our key that it's coming from a source generator as opposed to something that is coming from
+        some other tool. -->
+        <Compile Remove="$(CompilerGeneratedFilesOutputPath)/*/**/*.cs" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>GeneratedFiles</CompilerGeneratedFilesOutputPath>
+    </PropertyGroup>
 </Project>
