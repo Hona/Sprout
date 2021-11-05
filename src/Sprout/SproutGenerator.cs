@@ -6,6 +6,7 @@ using Markdig.Extensions.Yaml;
 using Markdig.Syntax;
 using Microsoft.CodeAnalysis;
 using Sprout.Models;
+using Sprout.Services;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -14,8 +15,6 @@ namespace Sprout;
 [Generator]
 public class SproutGenerator : ISourceGenerator
 {
-
-
     public void Initialize(GeneratorInitializationContext context)
     {
 #if DEBUG
@@ -32,8 +31,18 @@ public class SproutGenerator : ISourceGenerator
 
         var configPath = Path.Join(projectDirectory, Constants.SproutConfigFileName);
         var config = SproutConfig.Load(configPath);
-
+        
         var markdownFilePaths = GetMarkdownFilePaths(projectDirectory, config);
+        
+        var generationService = new GenerationService(context, config);
+
+        foreach (var markdownFilePath in markdownFilePaths)
+        {
+            var fileName = markdownFilePath.Split(Path.DirectorySeparatorChar).Last();
+            var generatedFile = generationService.GenerateFromPath(markdownFilePath);
+            
+            context.AddSource(fileName, generatedFile);
+        }
     }
 
     private string GetProjectRootDirectory(GeneratorExecutionContext context)

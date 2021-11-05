@@ -23,6 +23,14 @@ public static class BlockService
         }
     }
 
-    public static string Generate(Block block, ComponentContext context) 
-        => BlockGenerators[block.GetType()].Generate(block, context);
+    public static string Generate(Block block, ComponentContext context)
+    {
+        if (BlockGenerators.TryGetValue(block.GetType(), out var generator))
+        {
+            return generator.Generate(block, context);
+        }
+
+        // For now, silently fail on unsupported blocks
+        return string.Empty;
+    }
 }
