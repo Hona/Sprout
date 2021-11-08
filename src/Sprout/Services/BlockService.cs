@@ -1,4 +1,5 @@
 using Markdig.Syntax;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Sprout.Models;
 using Sprout.Utilities;
 
@@ -6,20 +7,26 @@ namespace Sprout.Services;
 
 public static class BlockService
 {
-    private static readonly Dictionary<Type, IBlockGenerator<Block>> BlockGenerators = new();
+    private static readonly Dictionary<Type, IBlockGenerator> BlockGenerators = new();
 
     static BlockService()
     {
         var blockGenerators = AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(x => x.GetBlockGenerators());
+            .SelectMany(x => x.GetBlockGenerators())
+            .ToList();
 
         foreach (var blockGenerator in blockGenerators)
         {
-            var blockGeneratorInterface = blockGenerator.GetInterfaces().Single();
+            if (blockGenerator.GetInterfaces().All(x => x != typeof(IBlockGenerator)))
+            {
+                continue;
+            }
+            
+            var blockGeneratorInterface = blockGenerator.GetInterfaces().Single(x => x.GenericTypeArguments.Any());
 
             var typeConstraint = blockGeneratorInterface.GenericTypeArguments.Single();
             
-            BlockGenerators[typeConstraint] = (IBlockGenerator<Block>)Activator.CreateInstance(blockGeneratorInterface);
+            BlockGenerators[typeConstraint] = (IBlockGenerator)Activator.CreateInstance(blockGenerator);
         }
     }
 
@@ -27,7 +34,7 @@ public static class BlockService
     {
         if (BlockGenerators.TryGetValue(block.GetType(), out var generator))
         {
-            return generator.Generate(block, context);
+            return generator.GenerateBlock(block, context);
         }
 
         // For now, silently fail on unsupported blocks
