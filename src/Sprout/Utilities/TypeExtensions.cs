@@ -5,11 +5,14 @@ namespace Sprout.Utilities;
 
 public static class TypeExtensions
 {
-    public static List<Type?> GetBlockGenerators(this Assembly assembly)
+    public static List<Type> GetBlockGenerators(this Assembly assembly)
     {
         var it = typeof (IBlockGenerator<>);
 
-        return GetClassesImplementingAnInterface(assembly, it);
+        return GetClassesImplementingAnInterface(assembly, it)
+            .Where(x => x is not null)
+            .Cast<Type>()
+            .ToList();
     }
 
     public static List<Type?> GetClassesImplementingAnInterface(Assembly? assemblyToScan, Type? implementedInterface)
