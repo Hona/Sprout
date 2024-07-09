@@ -13,7 +13,7 @@
 
     <ItemGroup>
         <PackageReference Include="Markdig" Version="0.26.0" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="System.Text.Json" Version="6.0.0-rc.2.21480.5" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="System.Text.Json" Version="8.0.4" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="YamlDotNet" Version="11.2.1" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
             <PrivateAssets>all</PrivateAssets>
